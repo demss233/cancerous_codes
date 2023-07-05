@@ -1,5 +1,4 @@
 int modpow(int a, int b, int m) {
-// 	calculate a ^ b % m
     a %= m;
     int r = 1;
     while (b > 0) {
