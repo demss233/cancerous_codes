@@ -11,7 +11,6 @@ struct segment_tree {
           }
           tree.resize(4 * N); 
           lazy = vector<int>(4 * N, 0);
-          can = vector<bool>(4 * N, false);
      }
  
      void build(int lvl, int l, int r) {
