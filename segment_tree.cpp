@@ -1,7 +1,6 @@
 struct segment_tree {
-     const int inf = 1e18 + 7;
+     const int inf = 1e9 + 7;
      vector<int> a, lazy;
-     vector<bool> can;
      vector<ar<int, 3>> tree;
  
      segment_tree(vector<int> v) {
@@ -10,7 +9,7 @@ struct segment_tree {
           for(int i = 0; i < N; ++i) {
                a[i] = v[i];
           }
-          tree.resize(4 * N); //somewhat equal to (1 << (1 << n))
+          tree.resize(4 * N); 
           lazy = vector<int>(4 * N, 0);
           can = vector<bool>(4 * N, false);
      }
