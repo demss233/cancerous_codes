@@ -3,7 +3,7 @@
 // #include <ext/pb_ds/assoc_container.hpp>
 using namespace std;
 // using namespace __gnu_pbds;
-#define int long long
+#define ll long long
 #define ar array
 #define ld long double  
 #define f first
