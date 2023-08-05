@@ -18,3 +18,4 @@ int modpow(int n, int k) {
  
     return (k % 2 == 0 ? pw : mul(pw, n));
 }
+
