@@ -1,21 +1,10 @@
-const int M = 1e9 + 7;
-int sum(int a, int b) {
-    a += b;
-    return (a >= M ? a - M : a);
+int binpow(int a, int b) {
+    int mul = 1;
+    while (b > 0) {
+        if (b & 1)
+            mul = mul * a;
+        a = a * a;
+        b >>= 1;
+    }
+    return mul;
 }
-int diff(int a, int b) {
-    return sum(a, M - b);
-}
-int mult(int a, int b) {
-    return a * 1ll * b % M;
-}
-int modpow(int n, int k) {
-    if(k == 0)
-        return 1;
- 
-    int pw = pow2(n, k / 2);
-    pw = mul(pw, pw);
- 
-    return (k % 2 == 0 ? pw : mul(pw, n));
-}
-
