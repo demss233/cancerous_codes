@@ -3,7 +3,7 @@
 // #include <ext/pb_ds/assoc_container.hpp>
 using namespace std;
 // using namespace __gnu_pbds;
-#define ll long long
+#define int long long
 #define ar array
 #define ld long double  
 #define f first
@@ -23,5 +23,5 @@ void err(istream_iterator<string> it, T a, Args... args) {
 //template <class T> using tree = tree<T, null_type, less<T>, rb_tree_tag,tree_order_statistics_node_update>;
 
 int32_t main() {
-
+     cin.tie(0)->sync_with_stdio(0);
 }
