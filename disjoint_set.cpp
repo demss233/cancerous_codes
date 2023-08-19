@@ -1,10 +1,12 @@
 struct disjoint_set {
      vector<int> parent, size;
+
      disjoint_set(int n) {
           parent = vector<int>(n + 1);
           iota(all(parent), 0);
           size = vector<int>(n + 1, 1);
-     }    
+     }
+
      int find(int x) {
           if(parent[x] == x) return x;
           return parent[x] = find(parent[x]);
