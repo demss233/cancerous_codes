@@ -1,10 +1,6 @@
-int binpow(int a, int b) {
-    int mul = 1;
-    while (b > 0) {
-        if (b & 1)
-            mul = mul * a;
-        a = a * a;
-        b >>= 1;
-    }
-    return mul;
+int modpow(int b, int e) {
+    int ans = 1;
+    for (; e; b = b * b % P, e /= 2)
+        if (e & 1) ans = ans * b % P;
+    return ans;
 }
