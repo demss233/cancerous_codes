@@ -1,27 +1,28 @@
-struct mi {
-    	int v;
-    	explicit operator int() const { return v; }
-    	mi() { v = 0; }
-    	mi(long long _v) : v(_v % MOD) { v += (v < 0) * MOD; }
+template <int MOD = mod>
+struct mint {
+     int value;
+     static const int MOD_value = MOD;
+     
+     mint(long long v = 0) { value = v % MOD; if (value < 0) value += MOD;}
+     mint(long long a, long long b) : value(0){ *this += a; *this /= b;}
+
+     mint& operator+=(mint const& b) {value += b.value; if (value >= MOD) value -= MOD; return *this;}
+     mint& operator-=(mint const& b) {value -= b.value; if (value < 0) value += MOD;return *this;}
+     mint& operator*=(mint const& b) {value = (long long)value * b.value % MOD;return *this;}
+
+     friend mint mexp(mint a, long long e) {
+          mint res = 1; while (e) { if (e&1) res *= a; a *= a; e >>= 1; }
+          return res;
+     }
+     friend mint inverse(mint a) { return mexp(a, MOD - 2); }
+
+     mint& operator/=(mint const& b) { return *this *= inverse(b); }
+     friend mint operator+(mint a, mint const b) { return a += b; }
+     friend mint operator-(mint a, mint const b) { return a -= b; }
+     friend mint operator-(mint const a) { return 0 - a; }
+     friend mint operator*(mint a, mint const b) { return a *= b; }
+     friend mint operator/(mint a, mint const b) { return a /= b; }
+     friend std::ostream& operator<<(std::ostream& os, mint const& a) {return os << a.value;}
+     friend bool operator==(mint const& a, mint const& b) {return a.value == b.value;}
+     friend bool operator!=(mint const& a, mint const& b) {return a.value != b.value;}
 };
-mi &operator+=(mi &a, mi b) {
-    	if ((a.v += b.v) >= MOD) a.v -= MOD;
-    	return a;
-}
-mi &operator-=(mi &a, mi b) {
-    	if ((a.v -= b.v) < 0) a.v += MOD;
-    	return a;
-}
-mi operator+(mi a, mi b) { return a += b; }
-mi operator-(mi a, mi b) { return a -= b; }
-mi operator*(mi a, mi b) { return mi((long long)a.v * b.v); }
-mi &operator*=(mi &a, mi b) { return a = a * b; }
-mi pow(mi a, long long p) {
-    	assert(p >= 0);
-    	return p == 0 ? 1 : pow(a * a, p / 2) * (p & 1 ? a : 1);
-}
-mi inv(mi a) {
-    	assert(a.v != 0);
-    	return pow(a, MOD - 2);
-}
-mi operator/(mi a, mi b) { return a * inv(b); }
