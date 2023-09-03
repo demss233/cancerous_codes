@@ -1,28 +1,45 @@
-template <int MOD = mod>
-struct mint {
-     int value;
-     static const int MOD_value = MOD;
-     
-     mint(long long v = 0) { value = v % MOD; if (value < 0) value += MOD;}
-     mint(long long a, long long b) : value(0){ *this += a; *this /= b;}
-
-     mint& operator+=(mint const& b) {value += b.value; if (value >= MOD) value -= MOD; return *this;}
-     mint& operator-=(mint const& b) {value -= b.value; if (value < 0) value += MOD;return *this;}
-     mint& operator*=(mint const& b) {value = (long long)value * b.value % MOD;return *this;}
-
-     friend mint mexp(mint a, long long e) {
-          mint res = 1; while (e) { if (e&1) res *= a; a *= a; e >>= 1; }
-          return res;
-     }
-     friend mint inverse(mint a) { return mexp(a, MOD - 2); }
-
-     mint& operator/=(mint const& b) { return *this *= inverse(b); }
-     friend mint operator+(mint a, mint const b) { return a += b; }
-     friend mint operator-(mint a, mint const b) { return a -= b; }
-     friend mint operator-(mint const a) { return 0 - a; }
-     friend mint operator*(mint a, mint const b) { return a *= b; }
-     friend mint operator/(mint a, mint const b) { return a /= b; }
-     friend std::ostream& operator<<(std::ostream& os, mint const& a) {return os << a.value;}
-     friend bool operator==(mint const& a, mint const& b) {return a.value == b.value;}
-     friend bool operator!=(mint const& a, mint const& b) {return a.value != b.value;}
+template <int MOD>
+class Modular {
+private:
+    int val;
+    static const int mod = MOD;
+    Modular inverse (const Modular &A) {
+        Modular u = 0, v = 1;
+        int a = A.val;
+        int b = mod;
+        while(a != 0) {
+            int t = b / a;
+            b -= t * a; swap(b, a);
+            u -= t * v; swap(u, v);
+        }
+        return (b == 1) ? u : 0;
+    }
+public:
+    explicit operator int() const {
+        return val;
+    }
+    Modular() { val = 0; }
+    Modular(ll x) {
+        val = x % mod;
+        if(val < 0) val += mod;
+    }
+    friend bool operator==(const Modular &A, const Modular &B) { return A.val == B.val; }
+    friend bool operator!=(const Modular &A, const Modular &B) { return A.val != B.val; }
+    friend bool operator<(const Modular &A, const Modular &B) { return A.val < B.val; }
+    friend bool operator>(const Modular &A, const Modular &B) { return A.val > B.val; }
+    Modular &operator+=(const Modular &A) { val += A.val; val %= mod; return *this; }
+    Modular &operator-=(const Modular &A) { val -= A.val; if(val < 0) val += mod; return *this; }
+    Modular &operator*=(const Modular &A) { val = (int)((ll)val * A.val % mod); return *this; }
+    Modular &operator/=(const Modular &A) { return *this *= inverse(A); }
+    Modular operator-() const { return Modular(-val); }
+    Modular &operator++() { return *this += 1; }
+    Modular &operator--() { return *this -= 1; }
+    friend Modular operator+(Modular A, const Modular &B) { return A += B; }
+    friend Modular operator-(Modular A, const Modular &B) { return A -= B; }
+    friend Modular operator*(Modular A, const Modular &B) { return A *= B; }
+    friend Modular operator/(Modular A, const Modular &B) { return A /= B; }
+    friend istream& operator>>(istream& stream, Modular &A) { ll x; stream >> x; A = Modular(x); return stream; }
+    friend ostream& operator<<(ostream& stream, Modular &A) { return stream << A.val; }
 };
+
+const int MOD = 1e9 + 7;
